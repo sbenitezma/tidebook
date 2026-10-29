@@ -1,0 +1,62 @@
+[
+  {
+    "id": "driftwood",
+    "name": "Driftwood Room",
+    "type": "room",
+    "description": "A bright double room with whitewashed timber, a reading nook and a window onto the dunes.",
+    "sizeM2": 22,
+    "beds": 1,
+    "bedType": "Double",
+    "maxGuests": 2,
+    "pricePerNightCents": 9500,
+    "image": "rooms/driftwood.svg"
+  },
+  {
+    "id": "salt-marsh",
+    "name": "Salt Marsh Room",
+    "type": "room",
+    "description": "Calm twin room facing the marshes, with a small balcony for watching the birds at dawn.",
+    "sizeM2": 26,
+    "beds": 2,
+    "bedType": "Twin",
+    "maxGuests": 3,
+    "pricePerNightCents": 12000,
+    "image": "rooms/salt-marsh.svg"
+  },
+  {
+    "id": "seagrass",
+    "name": "Seagrass Bungalow",
+    "type": "bungalow",
+    "description": "Single-storey bungalow a few steps from the sand, with a shaded porch and outdoor shower.",
+    "sizeM2": 40,
+    "beds": 2,
+    "bedType": "Queen and sofa bed",
+    "maxGuests": 4,
+    "pricePerNightCents": 16500,
+    "image": "rooms/seagrass.svg"
+  },
+  {
+    "id": "lighthouse",
+    "name": "Lighthouse Bungalow",
+    "type": "bungalow",
+    "description": "Our most secluded bungalow, on the headland, with sea views from the bed and a private deck.",
+    "sizeM2": 55,
+    "beds": 2,
+    "bedType": "King and twin",
+    "maxGuests": 5,
+    "pricePerNightCents": 21000,
+    "image": "rooms/lighthouse.svg"
+  },
+  {
+    "id": "tidepool",
+    "name": "Tidepool Family Bungalow",
+    "type": "bungalow",
+    "description": "Two bedrooms, a kitchenette and a garden gate that opens straight onto the rock pools.",
+    "sizeM2": 70,
+    "beds": 3,
+    "bedType": "King and two singles",
+    "maxGuests": 7,
+    "pricePerNightCents": 26500,
+    "image": "rooms/tidepool.svg"
+  }
+]

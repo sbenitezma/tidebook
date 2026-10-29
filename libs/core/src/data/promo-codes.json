@@ -1,0 +1,5 @@
+[
+  { "code": "WELCOME10", "percent": 10, "expiresOn": "2099-12-31" },
+  { "code": "SUMMER15", "percent": 15, "expiresOn": "2099-12-31" },
+  { "code": "SPRING20", "percent": 20, "expiresOn": "2025-05-31" }
+]
