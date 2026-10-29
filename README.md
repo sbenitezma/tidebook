@@ -5,10 +5,11 @@ bungalow, apply a promo code and confirm. It is a portfolio project that shows o
 and one business-logic library shared by apps written in different frameworks, inside an Nx
 monorepo.
 
-**Live demo (React):** https://musical-crumble-883e5f.netlify.app
+**Live demos:** [React](https://sbenitezma-tidebook-react.netlify.app) ·
+[Vue](https://sbenitezma-tidebook-vue.netlify.app)
 
 Try a promo code straight from the URL:
-[`?promo=WELCOME10`](https://musical-crumble-883e5f.netlify.app/?promo=WELCOME10) (10 % off),
+[`?promo=WELCOME10`](https://sbenitezma-tidebook-react.netlify.app/?promo=WELCOME10) (10 % off),
 `SUMMER15` (15 % off) or `SPRING20` (expired, shows a clear message).
 
 ## Architecture
