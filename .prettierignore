@@ -1,0 +1,6 @@
+node_modules
+dist
+coverage
+.nx
+package-lock.json
+tidebook-prompt.md
