@@ -6,7 +6,8 @@ and one business-logic library shared by apps written in different frameworks, i
 monorepo.
 
 **Live demos:** [React](https://sbenitezma-tidebook-react.netlify.app) ·
-[Vue](https://sbenitezma-tidebook-vue.netlify.app)
+[Vue](https://sbenitezma-tidebook-vue.netlify.app) ·
+[Storybook](https://sbenitezma-tidebook-storybook.netlify.app)
 
 Try a promo code straight from the URL:
 [`?promo=WELCOME10`](https://sbenitezma-tidebook-react.netlify.app/?promo=WELCOME10) (10 % off),
