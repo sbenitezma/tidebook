@@ -40,7 +40,7 @@ Business rules that must stay covered by tests:
   properties and typed `CustomEvent`s (`tb-*` event names, declared in `HTMLElementEventMap`).
   No decorators: `static properties` + `declare` fields.
 - `apps/react`: React 19 + Vite, uses the custom elements natively (events as `ontb-change`
-  props, typed in `src/custom-elements.d.ts`).
+  props, typed in `src/custom-elements.ts`).
 - Roadmap: `apps/vue` (Vue 3, `isCustomElement` for `tb-*`), Storybook
   (`@storybook/web-components-vite`) for `libs/ui` and tokens, optional `apps/angular`
   (`CUSTOM_ELEMENTS_SCHEMA`), Playwright E2E for the main flow.
