@@ -58,15 +58,27 @@ export type Tokens = typeof tokens;
 
 const kebab = (value: string) => value.replace(/[A-Z]/g, (char) => `-${char.toLowerCase()}`);
 
+const varName = (group: string, name: string) => `--tb-${kebab(group)}-${kebab(name)}`;
+
 /** Flattens the token tree into `--tb-<group>-<name>` custom properties on `:root`. */
 export function toCssVariables(source: Record<string, Record<string, string>> = tokens): string {
   const declarations = Object.entries(source).flatMap(([group, values]) =>
-    Object.entries(values).map(([name, value]) => `--tb-${kebab(group)}-${kebab(name)}: ${value};`),
+    Object.entries(values).map(([name, value]) => `${varName(group, name)}: ${value};`),
   );
   return `:root {\n  ${declarations.join('\n  ')}\n}\n`;
 }
 
 export const tokensCss = toCssVariables();
+
+export type TokenVars = { [G in keyof Tokens]: { [N in keyof Tokens[G]]: string } };
+
+/** Same shape as `tokens`, with `var(--tb-…)` references: a typo is a compile error. */
+export const vars = Object.fromEntries(
+  Object.entries(tokens).map(([group, values]) => [
+    group,
+    Object.fromEntries(Object.keys(values).map((name) => [name, `var(${varName(group, name)})`])),
+  ]),
+) as TokenVars;
 
 /** Adds the token custom properties to the document once. */
 export function applyTokens(doc: Document = document): void {
