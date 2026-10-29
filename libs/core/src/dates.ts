@@ -39,3 +39,16 @@ export function validateStay({ checkIn, checkOut }: Stay, today: IsoDate): StayE
   if (nightsBetween(checkIn, checkOut) < 1) errors.push('check-out-not-after-check-in');
   return errors;
 }
+
+const longDate = new Intl.DateTimeFormat('en-GB', {
+  weekday: 'short',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+
+/** `2026-07-04` → `Sat, 4 July 2026`, read as a calendar date so no time zone shifts it. */
+export function formatLongDate(date: IsoDate): string {
+  return longDate.format(toUtc(date));
+}

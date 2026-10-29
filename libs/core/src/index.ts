@@ -4,4 +4,5 @@ export * from './guests';
 export * from './pricing';
 export * from './promo';
 export * from './booking';
+export * from './messages';
 export * from './data';

@@ -1,14 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { formatMoney, type Booking } from '@tidebook/core';
-
-const longDate = new Intl.DateTimeFormat('en-GB', {
-  weekday: 'short',
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-  timeZone: 'UTC',
-});
-const formatDate = (isoDate: string) => longDate.format(new Date(`${isoDate}T00:00:00Z`));
+import { formatLongDate, formatMoney, type Booking } from '@tidebook/core';
 
 export function Confirmation(props: { booking: Booking; saved: boolean; onDone: () => void }) {
   const { booking, saved, onDone } = props;
@@ -42,9 +33,9 @@ export function Confirmation(props: { booking: Booking; saved: boolean; onDone: 
       >
         <dl className="details">
           <dt>Check-in</dt>
-          <dd>{formatDate(booking.stay.checkIn)}</dd>
+          <dd>{formatLongDate(booking.stay.checkIn)}</dd>
           <dt>Check-out</dt>
-          <dd>{formatDate(booking.stay.checkOut)}</dd>
+          <dd>{formatLongDate(booking.stay.checkOut)}</dd>
           <dt>Guests</dt>
           <dd>
             {booking.guests.adults} adult{booking.guests.adults === 1 ? '' : 's'}

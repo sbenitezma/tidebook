@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { addDays, isIsoDate, nightsBetween, toIsoDate, validateStay } from './dates';
+import {
+  addDays,
+  formatLongDate,
+  isIsoDate,
+  nightsBetween,
+  toIsoDate,
+  validateStay,
+} from './dates';
 
 describe('isIsoDate', () => {
   it.each(['2026-07-01', '2028-02-29'])('accepts %s', (value) => {
@@ -70,5 +77,11 @@ describe('validateStay', () => {
     expect(validateStay({ checkIn: '2026-07-05', checkOut: '2026-07-05' }, today)).toEqual([
       'check-out-not-after-check-in',
     ]);
+  });
+});
+
+describe('formatLongDate', () => {
+  it('formats a calendar date the same way in every time zone', () => {
+    expect(formatLongDate('2026-07-04')).toBe('Sat, 4 July 2026');
   });
 });

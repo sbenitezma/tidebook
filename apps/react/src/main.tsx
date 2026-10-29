@@ -4,7 +4,7 @@ import { applyTokens } from '@tidebook/tokens';
 // Registers the tb-* custom elements before React renders them, so props become properties.
 import '@tidebook/ui';
 import { App } from './App';
-import './styles.css';
+import '@tidebook/ui/layout.css';
 
 applyTokens();
 

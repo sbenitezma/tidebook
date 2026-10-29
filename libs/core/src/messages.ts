@@ -1,5 +1,7 @@
-import type { BookingIssue, PromoResult } from '@tidebook/core';
+import type { BookingIssue } from './booking';
+import type { PromoResult } from './types';
 
+/** User-facing copy for booking issues and promo results, shared by every app. */
 export const issueMessages: Record<Exclude<BookingIssue, 'over-capacity'>, string> = {
   'invalid-check-in': 'Choose a valid check-in date.',
   'invalid-check-out': 'Choose a valid check-out date.',

@@ -13,11 +13,12 @@ import {
   validateStay,
   validatePromoCode,
   GUEST_LIMITS,
+  issueMessages,
+  promoMessage,
   type Booking,
   type StorageLike,
 } from '@tidebook/core';
 import { Confirmation } from './Confirmation';
-import { issueMessages, promoMessage } from './messages';
 
 /** `window.localStorage` itself throws when the browser blocks storage. */
 function browserStorage(): StorageLike | undefined {
