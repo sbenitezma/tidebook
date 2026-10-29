@@ -34,3 +34,11 @@ One line per decision, with its reason.
 - **Stories written with Lit `html`** and typed `Args` picked from each component class: controls match the real properties, and `fn()` logs the typed `tb-*` events in the Actions panel.
 - **Docs and accessibility addons only**, telemetry disabled: autodocs pages for every component and an axe check on each story, without extra weight.
 - **Storybook has its own Netlify site** (`libs/ui/netlify.toml`) that only rebuilds when `libs/ui`, `libs/tokens` or the workspace setup change.
+- **Angular 22 with standalone components, signals and zoneless change detection**: the current defaults of the framework, and the closest match to Vue's `ref`/`computed` for a fair comparison.
+- **`CUSTOM_ELEMENTS_SCHEMA` and no extra typings in Angular**: with `strictTemplates`, Angular already types `(tb-select)` events from the `HTMLElementEventMap` entries in `libs/ui`. Property bindings on `tb-*` are not type-checked under the schema; the E2E suite covers them.
+- **Angular copies `libs/ui/public` before `dev` and `build`** (npm `pre` scripts, git-ignored `apps/angular/public`): the Angular builder only serves assets inside its own folder, and a one-line Node copy works on every OS, unlike a symlink.
+- **Angular unit tests with the official Vitest runner** (`@angular/build:unit-test`): the same test runner as the rest of the monorepo.
+- **Angular linted with the shared ESLint config only**: templates are already checked at build time by `strictTemplates`; `angular-eslint` can be added if template style rules become useful.
+- **Removed the `:not(:defined)` hiding rule from the layout CSS**: every app registers the `tb-*` elements before its first render, so it never helped, and it hid Angular's `<app-root>`, which is not a registered custom element.
+- **Node 22.22.3 or later**: the minimum required by Angular 22; Netlify builds with the latest Node 22.
+- **One E2E suite for three apps**: React, Vue and Angular run the same 3 scenarios on desktop and mobile (18 runs).

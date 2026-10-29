@@ -2,11 +2,12 @@
 
 Tidebook is a booking site for coastal stays: pick your dates and guests, choose a room or
 bungalow, apply a promo code and confirm. It is a portfolio project that shows one design system
-and one business-logic library shared by apps written in different frameworks, inside an Nx
+and one business-logic library shared by the same app written in React, Vue and Angular, inside an Nx
 monorepo.
 
 **Live demos:** [React](https://sbenitezma-tidebook-react.netlify.app) ·
 [Vue](https://sbenitezma-tidebook-vue.netlify.app) ·
+[Angular](https://sbenitezma-tidebook-angular.netlify.app) ·
 [Storybook](https://sbenitezma-tidebook-storybook.netlify.app)
 
 Try a promo code straight from the URL:
@@ -19,27 +20,32 @@ Try a promo code straight from the URL:
 flowchart LR
   react[apps/react<br/>React 19 + Vite]
   vue[apps/vue<br/>Vue 3 + Vite]
+  angular[apps/angular<br/>Angular 22]
   ui[libs/ui<br/>Lit web components tb-*]
   tokens[libs/tokens<br/>design tokens]
   core[libs/core<br/>business rules · TypeScript]
 
   react --> ui
   vue --> ui
+  angular --> ui
   ui --> tokens
   react --> tokens
   vue --> tokens
+  angular --> tokens
   react --> core
   vue --> core
+  angular --> core
 ```
 
-| Package       | What it holds                                                                                                                                                                                                                               |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `libs/tokens` | Colours, typography, spacing, radii and shadows, defined once and exported as TS constants and CSS custom properties (`--tb-*`).                                                                                                            |
-| `libs/core`   | Pure TypeScript: dates, guests and capacity, promo codes, pricing, booking creation and storage. No framework, no DOM.                                                                                                                      |
-| `libs/ui`     | The page layout stylesheet, room illustrations, a Storybook and ten Lit web components (`tb-button`, `tb-text-field`, `tb-date-field`, `tb-counter`, `tb-badge`, `tb-alert`, `tb-room-card`, `tb-price-summary`, `tb-header`, `tb-footer`). |
-| `apps/react`  | The booking app in React 19: presentation and UI state only.                                                                                                                                                                                |
-| `apps/vue`    | The same booking app in Vue 3: presentation and UI state only.                                                                                                                                                                              |
-| `apps/e2e`    | Playwright end-to-end tests of the booking flow, run against both apps on desktop and mobile, using the production builds.                                                                                                                  |
+| Package        | What it holds                                                                                                                                                                                                                               |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `libs/tokens`  | Colours, typography, spacing, radii and shadows, defined once and exported as TS constants and CSS custom properties (`--tb-*`).                                                                                                            |
+| `libs/core`    | Pure TypeScript: dates, guests and capacity, promo codes, pricing, booking creation and storage. No framework, no DOM.                                                                                                                      |
+| `libs/ui`      | The page layout stylesheet, room illustrations, a Storybook and ten Lit web components (`tb-button`, `tb-text-field`, `tb-date-field`, `tb-counter`, `tb-badge`, `tb-alert`, `tb-room-card`, `tb-price-summary`, `tb-header`, `tb-footer`). |
+| `apps/react`   | The booking app in React 19: presentation and UI state only.                                                                                                                                                                                |
+| `apps/vue`     | The same booking app in Vue 3: presentation and UI state only.                                                                                                                                                                              |
+| `apps/angular` | The same booking app in Angular 22 with signals: presentation and UI state only.                                                                                                                                                            |
+| `apps/e2e`     | Playwright end-to-end tests of the booking flow, run against all three apps on desktop and mobile, using the production builds.                                                                                                             |
 
 ## Why it is built this way
 
@@ -66,12 +72,13 @@ Every technical decision is recorded with its reason in [`docs/decisions.md`](do
 
 ## Getting started
 
-Requires Node 22 or later.
+Requires Node 22.22.3 or later (Angular 22's minimum).
 
 ```bash
 npm install
 npm run dev              # React app on http://localhost:5173
 npm run dev:vue          # Vue app on http://localhost:5174
+npm run dev:angular      # Angular app on http://localhost:5175
 npm run storybook        # Storybook on http://localhost:6006
 ```
 
@@ -79,7 +86,7 @@ Main Nx commands:
 
 ```bash
 npx nx test core          # core business rules with coverage
-npx nx e2e e2e            # Playwright E2E on both apps (also: npm run e2e)
+npx nx e2e e2e            # Playwright E2E on all three apps (also: npm run e2e)
 npx nx build-storybook ui # static Storybook in libs/ui/dist/storybook
 npm run check             # lint, typecheck, test, build and Storybook build for everything
 npm run affected          # the same plus E2E, only for what changed since main
@@ -105,25 +112,26 @@ All rules live in `libs/core` and are covered by unit tests.
 - **Saving.** Confirmed bookings are stored in `localStorage`. If the browser blocks storage,
   the booking still completes and the guest is told it was not saved on the device.
 
-## React and Vue side by side
+## React, Vue and Angular side by side
 
-Both apps render the same markup with the same `tb-*` components, call the same `libs/core`
+The three apps render the same markup with the same `tb-*` components, call the same `libs/core`
 functions and pass the same Playwright suite. What changes is how each framework talks to a web
 component:
 
-| Concern            | React 19                                                        | Vue 3                                                                 |
-| ------------------ | --------------------------------------------------------------- | --------------------------------------------------------------------- |
-| Setup              | Nothing: custom elements are supported natively.                | `isCustomElement: (tag) => tag.startsWith('tb-')` in the Vite plugin. |
-| Objects, booleans  | Set as properties when the element defines them: `room={room}`. | Same rule: `:room="room"`, `:selected="isSelected"`.                  |
-| Events             | `ontb-select={(event) => …}`                                    | `@tb-select="…"`                                                      |
-| Typed props/events | Augment `JSX.IntrinsicElements`.                                | Augment `GlobalComponents`, checked by `vue-tsc`.                     |
-| UI state           | `useState`, values recomputed on every render.                  | `ref` and `computed`, recomputed only when a dependency changes.      |
+| Concern           | React 19                                         | Vue 3                                                       | Angular 22                                                     |
+| ----------------- | ------------------------------------------------ | ----------------------------------------------------------- | -------------------------------------------------------------- |
+| Setup             | Nothing: custom elements are supported natively. | `isCustomElement: (tag) => tag.startsWith('tb-')`.          | `schemas: [CUSTOM_ELEMENTS_SCHEMA]` on each component.         |
+| Objects, booleans | Set as properties: `room={room}`.                | Set as properties: `:room="room"`.                          | Property binding: `[room]="room"`.                             |
+| Events            | `ontb-select={(event) => …}`                     | `@tb-select="…"`                                            | `(tb-select)="…"`                                              |
+| Typed events      | Augment `JSX.IntrinsicElements`.                 | Augment `GlobalComponents`, checked by `vue-tsc`.           | Read from `HTMLElementEventMap`, checked by `strictTemplates`. |
+| UI state          | `useState`, recomputed on every render.          | `ref` and `computed`, recomputed when a dependency changes. | `signal` and `computed`, zoneless change detection.            |
 
-The typings live in [`apps/react/src/custom-elements.ts`](apps/react/src/custom-elements.ts) and
-[`apps/vue/src/custom-elements.ts`](apps/vue/src/custom-elements.ts). Both reuse the component
-classes and their typed `CustomEvent`s, so a wrong prop or a misread `event.detail` fails the
-type check. In both apps, `import '@tidebook/ui'` runs before the first render, so the elements
-are defined when the framework sets their properties.
+React and Vue get their typings from [`apps/react/src/custom-elements.ts`](apps/react/src/custom-elements.ts)
+and [`apps/vue/src/custom-elements.ts`](apps/vue/src/custom-elements.ts), which reuse the
+component classes and their typed `CustomEvent`s. Angular needs no extra file: its template type
+checker reads the `HTMLElementEventMap` entries that `libs/ui` declares, so a misread
+`event.detail` fails the build in all three apps. Each app runs `import '@tidebook/ui'` before the
+first render, so the elements are defined when the framework sets their properties.
 
 ## Deployment
 
@@ -138,13 +146,15 @@ ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- apps/react libs pac
 
 Netlify skips the build when the command exits with 0, which `git diff --quiet` does when none of
 those paths changed since the last deploy. A change to `apps/vue` does not redeploy the React
-site; a change to any shared library redeploys both.
+site; a change to any shared library redeploys every app.
 
 ## Roadmap
 
 Tidebook keeps growing in these directions:
 
-- **Angular app** with `CUSTOM_ELEMENTS_SCHEMA`, completing the trio.
+- **Continuous integration** with GitHub Actions running `npm run affected` on every pull request.
+- **Form-associated custom elements** (`ElementInternals`), so the `tb-*` fields work inside a
+  native `<form>`.
 
 ## Credits
 

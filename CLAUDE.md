@@ -44,7 +44,7 @@ Business rules that must stay covered by tests:
 - `apps/vue`: Vue 3 + Vite, `<script setup>` SFCs. `isCustomElement` for `tb-*` in
   `vite.config.ts`; bindings become properties, events as `@tb-select`, typed through
   `GlobalComponents` in `src/custom-elements.ts` and checked by `vue-tsc`.
-- Shared by both apps: page layout CSS (`@tidebook/ui/layout.css`), room illustrations and favicon
+- Shared by every app: page layout CSS (`@tidebook/ui/layout.css`), room illustrations and favicon
   (`libs/ui/public`, Vite `publicDir`), user-facing messages and `formatLongDate` (`libs/core`).
 - `apps/e2e`: one Playwright suite run against every app's production build (desktop and
   mobile). Locators by role and label (they pierce shadow DOM). Run with `npx nx e2e e2e`;
@@ -53,8 +53,12 @@ Business rules that must stay covered by tests:
   `*.stories.ts` next to each component, plus a tokens page. Docs and a11y addons, telemetry off.
   Targets `storybook` and `build-storybook` (output `libs/ui/dist/storybook`); stories are
   excluded from the `production` input so they never invalidate app builds.
-- Roadmap: optional `apps/angular`
-  (`CUSTOM_ELEMENTS_SCHEMA`).
+- `apps/angular`: Angular 22, standalone components, signals and zoneless change detection.
+  `CUSTOM_ELEMENTS_SCHEMA` for `tb-*`; property bindings (`[room]`), events as `(tb-select)`,
+  typed from `HTMLElementEventMap` by `strictTemplates`. `ng build` / `ng test` (Vitest runner);
+  `prebuild`/`predev` copy `libs/ui/public` into the git-ignored `apps/angular/public`, because
+  Angular only serves assets inside its own folder. Needs Node 22.22.3+.
+- Roadmap: GitHub Actions CI, form-associated custom elements.
 - Apps contain presentation and UI state only. Any business rule goes to `libs/core` first,
   with its test.
 - Netlify: one site per app (and one for Storybook), each with its own `netlify.toml` (Nx build,
@@ -62,7 +66,8 @@ Business rules that must stay covered by tests:
 
 ## Commands
 
-- `npm run dev` / `npm run dev:vue` — React (5173) / Vue (5174) dev server.
+- `npm run dev` / `npm run dev:vue` / `npm run dev:angular` — React (5173) / Vue (5174) /
+  Angular (5175) dev server.
 - `npm run storybook` — Storybook (6006).
 - `npm run check` — lint, typecheck, test, build and Storybook build for every project.
 - `npm run e2e` — Playwright E2E.

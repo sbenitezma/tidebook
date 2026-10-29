@@ -1,4 +1,6 @@
 # Next step
 
-Delivery 3 (Storybook) is complete and live on Netlify with the React and Vue apps. Next:
-delivery 4, the optional Angular app, only once it is confirmed.
+Delivery 4 (Angular app) is complete. Pending outside the repo: create the Netlify site for
+`apps/angular` (base directory empty, package directory `apps/angular`) named
+`sbenitezma-tidebook-angular`. Next idea from the roadmap: GitHub Actions CI running
+`npm run affected`.
