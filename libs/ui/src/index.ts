@@ -9,3 +9,8 @@ export * from './header';
 export * from './price-summary';
 export * from './room-card';
 export * from './text-field';
+
+import type { LitElement } from 'lit';
+
+/** Public properties of a `tb-*` element, for typing framework bindings such as JSX. */
+export type ElementProps<E> = Partial<Omit<E, keyof LitElement>>;

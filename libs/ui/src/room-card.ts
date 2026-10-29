@@ -46,6 +46,10 @@ export class TbRoomCard extends LitElement {
     css`
       :host {
         display: block;
+        height: 100%;
+      }
+      tb-badge {
+        align-self: flex-start;
       }
       article {
         display: flex;
@@ -64,6 +68,7 @@ export class TbRoomCard extends LitElement {
       img {
         display: block;
         width: 100%;
+        height: auto;
         aspect-ratio: 16 / 10;
         object-fit: cover;
         background: ${t.color.surfaceMuted};
