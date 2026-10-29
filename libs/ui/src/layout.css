@@ -12,11 +12,6 @@ body {
   background: var(--tb-color-background);
 }
 
-/* Avoid a flash of unstyled custom elements before they register. */
-:not(:defined) {
-  visibility: hidden;
-}
-
 :focus-visible {
   outline: 3px solid var(--tb-color-focus);
   outline-offset: 2px;
