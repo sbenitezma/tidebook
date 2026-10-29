@@ -5,6 +5,7 @@ import { defineConfig, devices } from '@playwright/test';
 const apps = [
   { name: 'react', port: 4173 },
   { name: 'vue', port: 4174 },
+  { name: 'angular', port: 4175 },
 ];
 const screens = [
   { name: 'desktop', device: devices['Desktop Chrome'] },

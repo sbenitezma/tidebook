@@ -12,7 +12,8 @@
     "name": "e2e",
     "implicitDependencies": [
       "react",
-      "vue"
+      "vue",
+      "angular"
     ]
   },
   "devDependencies": {
