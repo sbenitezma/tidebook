@@ -49,8 +49,11 @@ Business rules that must stay covered by tests:
 - `apps/e2e`: one Playwright suite run against every app's production build (desktop and
   mobile). Locators by role and label (they pierce shadow DOM). Run with `npx nx e2e e2e`;
   browsers are installed once with `npx playwright install chromium`.
-- Roadmap: Storybook
-  (`@storybook/web-components-vite`) for `libs/ui` and tokens, optional `apps/angular`
+- Storybook (`@storybook/web-components-vite`) lives in `libs/ui`: `.storybook/` config and one
+  `*.stories.ts` next to each component, plus a tokens page. Docs and a11y addons, telemetry off.
+  Targets `storybook` and `build-storybook` (output `libs/ui/dist/storybook`); stories are
+  excluded from the `production` input so they never invalidate app builds.
+- Roadmap: optional `apps/angular`
   (`CUSTOM_ELEMENTS_SCHEMA`).
 - Apps contain presentation and UI state only. Any business rule goes to `libs/core` first,
   with its test.
@@ -60,9 +63,10 @@ Business rules that must stay covered by tests:
 ## Commands
 
 - `npm run dev` / `npm run dev:vue` — React (5173) / Vue (5174) dev server.
-- `npm run check` — lint, typecheck, test and build for every project.
+- `npm run storybook` — Storybook (6006).
+- `npm run check` — lint, typecheck, test, build and Storybook build for every project.
 - `npm run e2e` — Playwright E2E.
-- `npm run affected` — lint, typecheck, test, build and E2E for what changed only.
+- `npm run affected` — the same plus E2E, for what changed only.
 
 ## Repository rules
 

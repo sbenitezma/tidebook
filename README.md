@@ -31,14 +31,14 @@ flowchart LR
   vue --> core
 ```
 
-| Package       | What it holds                                                                                                                                                                                                                  |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `libs/tokens` | Colours, typography, spacing, radii and shadows, defined once and exported as TS constants and CSS custom properties (`--tb-*`).                                                                                               |
-| `libs/core`   | Pure TypeScript: dates, guests and capacity, promo codes, pricing, booking creation and storage. No framework, no DOM.                                                                                                         |
-| `libs/ui`     | The page layout stylesheet, room illustrations and ten Lit web components (`tb-button`, `tb-text-field`, `tb-date-field`, `tb-counter`, `tb-badge`, `tb-alert`, `tb-room-card`, `tb-price-summary`, `tb-header`, `tb-footer`). |
-| `apps/react`  | The booking app in React 19: presentation and UI state only.                                                                                                                                                                   |
-| `apps/vue`    | The same booking app in Vue 3: presentation and UI state only.                                                                                                                                                                 |
-| `apps/e2e`    | Playwright end-to-end tests of the booking flow, run against both apps on desktop and mobile, using the production builds.                                                                                                     |
+| Package       | What it holds                                                                                                                                                                                                                               |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `libs/tokens` | Colours, typography, spacing, radii and shadows, defined once and exported as TS constants and CSS custom properties (`--tb-*`).                                                                                                            |
+| `libs/core`   | Pure TypeScript: dates, guests and capacity, promo codes, pricing, booking creation and storage. No framework, no DOM.                                                                                                                      |
+| `libs/ui`     | The page layout stylesheet, room illustrations, a Storybook and ten Lit web components (`tb-button`, `tb-text-field`, `tb-date-field`, `tb-counter`, `tb-badge`, `tb-alert`, `tb-room-card`, `tb-price-summary`, `tb-header`, `tb-footer`). |
+| `apps/react`  | The booking app in React 19: presentation and UI state only.                                                                                                                                                                                |
+| `apps/vue`    | The same booking app in Vue 3: presentation and UI state only.                                                                                                                                                                              |
+| `apps/e2e`    | Playwright end-to-end tests of the booking flow, run against both apps on desktop and mobile, using the production builds.                                                                                                                  |
 
 ## Why it is built this way
 
@@ -56,6 +56,8 @@ this project builds on and deepens.
   totals, and the rules are tested in milliseconds.
 - **Test-driven development.** Each core rule started as a failing test. The core has 100 %
   coverage, enforced by the test runner.
+- **Storybook.** Every component state and the token palette are documented and browsable on
+  their own, with an accessibility check (axe) on each story.
 - **Design tokens.** One typed source of truth for the visual language. Components reference
   tokens through typed helpers, so a misspelt token is a compile error, not a silent fallback.
 
@@ -69,16 +71,18 @@ Requires Node 22 or later.
 npm install
 npm run dev              # React app on http://localhost:5173
 npm run dev:vue          # Vue app on http://localhost:5174
+npm run storybook        # Storybook on http://localhost:6006
 ```
 
 Main Nx commands:
 
 ```bash
-npx nx test core                            # core business rules with coverage
-npx nx e2e e2e                              # Playwright E2E on both apps (also: npm run e2e)
-npx nx run-many -t lint typecheck test build  # everything (also: npm run check)
-npx nx affected -t lint typecheck test build  # only what changed since main
-npx nx graph                                # explore the project graph
+npx nx test core          # core business rules with coverage
+npx nx e2e e2e            # Playwright E2E on both apps (also: npm run e2e)
+npx nx build-storybook ui # static Storybook in libs/ui/dist/storybook
+npm run check             # lint, typecheck, test, build and Storybook build for everything
+npm run affected          # the same plus E2E, only for what changed since main
+npx nx graph              # explore the project graph
 ```
 
 ## Business rules
@@ -139,7 +143,6 @@ site; a change to any shared library redeploys both.
 
 Tidebook keeps growing in these directions:
 
-- **Storybook** documenting every component and the token palette, published as its own site.
 - **Angular app** with `CUSTOM_ELEMENTS_SCHEMA`, completing the trio.
 
 ## Credits

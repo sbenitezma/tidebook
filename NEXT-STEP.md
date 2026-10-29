@@ -1,4 +1,5 @@
 # Next step
 
-Delivery 2 (Vue 3 app) is complete and both apps are live on Netlify. Next: delivery 3, Storybook
-for `libs/ui` and the tokens (`@storybook/web-components-vite`) with its own `netlify.toml`.
+Delivery 3 (Storybook) is complete. Pending outside the repo: create the Netlify site for
+Storybook (package directory `libs/ui`) and add its link to the README. Next: delivery 4, the
+optional Angular app, only once it is confirmed.

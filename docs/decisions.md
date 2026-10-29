@@ -30,3 +30,7 @@ One line per decision, with its reason.
 - **`tb-*` typed in Vue through `GlobalComponents`**, checked by `vue-tsc`: listeners are typed as `onTbSelect`-style props because that is how Vue compiles `@tb-select`.
 - **`vue/attribute-hyphenation` ignores `tb-*` tags**: their bindings are property names (`pricePerNight`), which Vue sets directly on the element.
 - **One E2E project (`apps/e2e`) for every app**: the same tests run against each production build on desktop and mobile, so the apps cannot drift apart. It replaces `apps/react-e2e`.
+- **Storybook inside `libs/ui`** rather than a separate app: stories sit next to the components they document, and Nx gives the library `storybook` and `build-storybook` targets. Stories and `.storybook/` are excluded from the `production` input, so editing a story never rebuilds or redeploys the apps.
+- **Stories written with Lit `html`** and typed `Args` picked from each component class: controls match the real properties, and `fn()` logs the typed `tb-*` events in the Actions panel.
+- **Docs and accessibility addons only**, telemetry disabled: autodocs pages for every component and an axe check on each story, without extra weight.
+- **Storybook has its own Netlify site** (`libs/ui/netlify.toml`) that only rebuilds when `libs/ui`, `libs/tokens` or the workspace setup change.
