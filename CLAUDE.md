@@ -41,10 +41,15 @@ Business rules that must stay covered by tests:
   No decorators: `static properties` + `declare` fields.
 - `apps/react`: React 19 + Vite, uses the custom elements natively (events as `ontb-change`
   props, typed in `src/custom-elements.ts`).
-- `apps/react-e2e`: Playwright E2E of the main flow against the production build (desktop and
-  mobile). Locators by role and label (they pierce shadow DOM). Run with `npx nx e2e react-e2e`;
+- `apps/vue`: Vue 3 + Vite, `<script setup>` SFCs. `isCustomElement` for `tb-*` in
+  `vite.config.ts`; bindings become properties, events as `@tb-select`, typed through
+  `GlobalComponents` in `src/custom-elements.ts` and checked by `vue-tsc`.
+- Shared by both apps: page layout CSS (`@tidebook/ui/layout.css`), room illustrations and favicon
+  (`libs/ui/public`, Vite `publicDir`), user-facing messages and `formatLongDate` (`libs/core`).
+- `apps/e2e`: one Playwright suite run against every app's production build (desktop and
+  mobile). Locators by role and label (they pierce shadow DOM). Run with `npx nx e2e e2e`;
   browsers are installed once with `npx playwright install chromium`.
-- Roadmap: `apps/vue` (Vue 3, `isCustomElement` for `tb-*`), Storybook
+- Roadmap: Storybook
   (`@storybook/web-components-vite`) for `libs/ui` and tokens, optional `apps/angular`
   (`CUSTOM_ELEMENTS_SCHEMA`).
 - Apps contain presentation and UI state only. Any business rule goes to `libs/core` first,
@@ -54,7 +59,7 @@ Business rules that must stay covered by tests:
 
 ## Commands
 
-- `npm run dev` — React app dev server.
+- `npm run dev` / `npm run dev:vue` — React (5173) / Vue (5174) dev server.
 - `npm run check` — lint, typecheck, test and build for every project.
 - `npm run e2e` — Playwright E2E.
 - `npm run affected` — lint, typecheck, test, build and E2E for what changed only.

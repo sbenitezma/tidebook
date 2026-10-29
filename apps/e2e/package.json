@@ -1,5 +1,5 @@
 {
-  "name": "@tidebook/react-e2e",
+  "name": "@tidebook/e2e",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,9 +9,10 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "nx": {
-    "name": "react-e2e",
+    "name": "e2e",
     "implicitDependencies": [
-      "react"
+      "react",
+      "vue"
     ]
   },
   "devDependencies": {

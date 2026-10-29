@@ -1,5 +1,5 @@
 # Next step
 
-Delivery 1.5 (Playwright E2E) is complete. Next: delivery 2, the Vue 3 app in `apps/vue` (Vite,
-`isCustomElement` for `tb-*`), its `netlify.toml`, and a README section comparing how React and
-Vue consume the web components.
+Delivery 2 (Vue 3 app) is complete. Pending outside the repo: create the Netlify site for
+`apps/vue` and add its demo link to the README. Next: delivery 3, Storybook for `libs/ui` and the
+tokens (`@storybook/web-components-vite`) with its own `netlify.toml`.
