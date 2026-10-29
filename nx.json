@@ -30,6 +30,10 @@
     "typecheck": {
       "inputs": ["default", "^production"],
       "cache": true
+    },
+    "e2e": {
+      "inputs": ["default", "^production"],
+      "cache": true
     }
   }
 }

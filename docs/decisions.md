@@ -22,3 +22,6 @@ One line per decision, with its reason.
 - **React JSX types in `custom-elements.ts` (not `.d.ts`)**: with `skipLibCheck`, mistakes in a `.d.ts` file are silently ignored.
 - **Room illustrations are original SVGs** in the app's `public/rooms` folder: light, crisp at any size and free of licensing questions.
 - **Netlify `ignore` with `git diff`** rather than the `nx-ignore` package: no extra install on every deploy and the rule is readable in one line; the trade-off is listing the watched paths by hand (`apps/<app>`, `libs`, root workspace files). Switch to `nx-ignore` if the dependency graph grows beyond what one line can describe.
+- **E2E in its own project (`apps/react-e2e`)** with `implicitDependencies: ["react"]`: `nx affected` runs it whenever the app or any library it uses changes, and the app's Netlify build does not watch it.
+- **E2E runs against the production build** (`vite preview`), the same files Netlify serves, in a desktop and a mobile (Pixel 7) Chromium project. Other browsers can be added as projects when needed.
+- **E2E locators by role and label only**: Playwright pierces open shadow roots, so the tests read like a user's actions and double as an accessibility check on the `tb-*` components.

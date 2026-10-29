@@ -41,9 +41,12 @@ Business rules that must stay covered by tests:
   No decorators: `static properties` + `declare` fields.
 - `apps/react`: React 19 + Vite, uses the custom elements natively (events as `ontb-change`
   props, typed in `src/custom-elements.ts`).
+- `apps/react-e2e`: Playwright E2E of the main flow against the production build (desktop and
+  mobile). Locators by role and label (they pierce shadow DOM). Run with `npx nx e2e react-e2e`;
+  browsers are installed once with `npx playwright install chromium`.
 - Roadmap: `apps/vue` (Vue 3, `isCustomElement` for `tb-*`), Storybook
   (`@storybook/web-components-vite`) for `libs/ui` and tokens, optional `apps/angular`
-  (`CUSTOM_ELEMENTS_SCHEMA`), Playwright E2E for the main flow.
+  (`CUSTOM_ELEMENTS_SCHEMA`).
 - Apps contain presentation and UI state only. Any business rule goes to `libs/core` first,
   with its test.
 - Netlify: one site per app (and one for Storybook), each with its own `netlify.toml` (Nx build,
@@ -53,7 +56,8 @@ Business rules that must stay covered by tests:
 
 - `npm run dev` — React app dev server.
 - `npm run check` — lint, typecheck, test and build for every project.
-- `npx nx affected -t lint typecheck test build` — only what changed.
+- `npm run e2e` — Playwright E2E.
+- `npm run affected` — lint, typecheck, test, build and E2E for what changed only.
 
 ## Repository rules
 

@@ -29,12 +29,13 @@ flowchart LR
   vue -.-> core
 ```
 
-| Package       | What it holds                                                                                                                                                               |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `libs/tokens` | Colours, typography, spacing, radii and shadows, defined once and exported as TS constants and CSS custom properties (`--tb-*`).                                            |
-| `libs/core`   | Pure TypeScript: dates, guests and capacity, promo codes, pricing, booking creation and storage. No framework, no DOM.                                                      |
-| `libs/ui`     | Ten Lit web components (`tb-button`, `tb-text-field`, `tb-date-field`, `tb-counter`, `tb-badge`, `tb-alert`, `tb-room-card`, `tb-price-summary`, `tb-header`, `tb-footer`). |
-| `apps/react`  | The booking app: presentation and UI state only.                                                                                                                            |
+| Package          | What it holds                                                                                                                                                               |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `libs/tokens`    | Colours, typography, spacing, radii and shadows, defined once and exported as TS constants and CSS custom properties (`--tb-*`).                                            |
+| `libs/core`      | Pure TypeScript: dates, guests and capacity, promo codes, pricing, booking creation and storage. No framework, no DOM.                                                      |
+| `libs/ui`        | Ten Lit web components (`tb-button`, `tb-text-field`, `tb-date-field`, `tb-counter`, `tb-badge`, `tb-alert`, `tb-room-card`, `tb-price-summary`, `tb-header`, `tb-footer`). |
+| `apps/react`     | The booking app: presentation and UI state only.                                                                                                                            |
+| `apps/react-e2e` | Playwright end-to-end tests of the booking flow, on desktop and mobile, against the production build.                                                                       |
 
 ## Why it is built this way
 
@@ -70,6 +71,7 @@ Main Nx commands:
 
 ```bash
 npx nx test core                            # core business rules with coverage
+npx nx e2e react-e2e                        # Playwright E2E, desktop and mobile (also: npm run e2e)
 npx nx run-many -t lint typecheck test build  # everything (also: npm run check)
 npx nx affected -t lint typecheck test build  # only what changed since main
 npx nx graph                                # explore the project graph
@@ -127,7 +129,6 @@ site; a change to any shared library redeploys both.
 
 Tidebook keeps growing in these directions:
 
-- **End-to-end tests** with Playwright for the main booking flow.
 - **Vue 3 app** using the same core, components and tokens, with a side-by-side comparison of how
   React and Vue consume web components.
 - **Storybook** documenting every component and the token palette, published as its own site.

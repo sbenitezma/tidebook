@@ -1,4 +1,5 @@
 # Next step
 
-Delivery 1 (React app) is complete. Next: delivery 1.5, a Playwright E2E test of the main flow
-(search, select a room, apply `WELCOME10`, confirm) in `apps/react-e2e`, wired into `nx affected`.
+Delivery 1.5 (Playwright E2E) is complete. Next: delivery 2, the Vue 3 app in `apps/vue` (Vite,
+`isCustomElement` for `tb-*`), its `netlify.toml`, and a README section comparing how React and
+Vue consume the web components.

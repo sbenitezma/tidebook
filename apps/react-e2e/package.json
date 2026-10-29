@@ -1,0 +1,21 @@
+{
+  "name": "@tidebook/react-e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "e2e": "playwright test",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "nx": {
+    "name": "react-e2e",
+    "implicitDependencies": [
+      "react"
+    ]
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.6"
+  }
+}
