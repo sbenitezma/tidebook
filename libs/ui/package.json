@@ -12,7 +12,9 @@
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "lint": "eslint .",
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -o dist/storybook"
   },
   "dependencies": {
     "@tidebook/tokens": "*",
@@ -20,5 +22,12 @@
   },
   "nx": {
     "name": "ui"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^10.6.5",
+    "@storybook/addon-docs": "^10.6.5",
+    "@storybook/web-components-vite": "^10.6.5",
+    "storybook": "^10.6.5",
+    "vite": "^8.3.5"
   }
 }

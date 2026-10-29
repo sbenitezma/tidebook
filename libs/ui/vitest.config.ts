@@ -5,7 +5,7 @@ export default defineConfig({
     environment: 'happy-dom',
     coverage: {
       include: ['src/**/*.ts'],
-      exclude: ['src/test-utils.ts'],
+      exclude: ['src/test-utils.ts', 'src/**/*.stories.ts'],
       thresholds: { lines: 90, branches: 85 },
     },
   },

@@ -1,0 +1,11 @@
+# Netlify site for the Storybook of the design system. Site settings: base directory = repository
+# root, package directory = libs/ui. Paths below are relative to the base directory.
+[build]
+  command = "npx nx build-storybook ui"
+  publish = "libs/ui/dist/storybook"
+  # Exit code 0 skips the build: only rebuild when the components, the tokens or the workspace
+  # setup changed since the last deploy.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- libs/ui libs/tokens package.json package-lock.json nx.json tsconfig.base.json"
+
+[build.environment]
+  NODE_VERSION = "22"

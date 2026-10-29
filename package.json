@@ -10,13 +10,14 @@
   "scripts": {
     "dev": "nx dev react",
     "dev:vue": "nx dev vue",
+    "storybook": "nx storybook ui",
     "build": "nx run-many -t build",
     "test": "nx run-many -t test",
     "lint": "nx run-many -t lint",
     "typecheck": "nx run-many -t typecheck",
-    "check": "nx run-many -t lint typecheck test build",
+    "check": "nx run-many -t lint typecheck test build build-storybook",
     "e2e": "nx run-many -t e2e",
-    "affected": "nx affected -t lint typecheck test build e2e",
+    "affected": "nx affected -t lint typecheck test build build-storybook e2e",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

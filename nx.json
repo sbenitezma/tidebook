@@ -8,7 +8,9 @@
       "default",
       "!{projectRoot}/**/*.test.ts",
       "!{projectRoot}/vitest.config.ts",
-      "!{projectRoot}/coverage/**/*"
+      "!{projectRoot}/coverage/**/*",
+      "!{projectRoot}/**/*.stories.ts",
+      "!{projectRoot}/.storybook/**/*"
     ]
   },
   "targetDefaults": {
@@ -33,6 +35,11 @@
     },
     "e2e": {
       "inputs": ["default", "^production"],
+      "cache": true
+    },
+    "build-storybook": {
+      "inputs": ["default", "^production"],
+      "outputs": ["{projectRoot}/dist/storybook"],
       "cache": true
     }
   },
