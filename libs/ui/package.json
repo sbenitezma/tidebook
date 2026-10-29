@@ -1,0 +1,23 @@
+{
+  "name": "@tidebook/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "sideEffects": true,
+  "scripts": {
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@tidebook/tokens": "*",
+    "lit": "^3.3.3"
+  },
+  "nx": {
+    "name": "ui"
+  }
+}
