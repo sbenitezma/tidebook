@@ -8,3 +8,17 @@ One line per decision, with its reason.
 - **ESLint 10 flat config at the root**, shared by every package; Prettier handles formatting (`eslint-config-prettier` turns off conflicting rules).
 - **npm `overrides` for `undici`**: Nx pulls a version with known advisories; pinning the patched minor keeps `npm audit` clean without forcing installs.
 - **`libs/core` has no `DOM` lib in its tsconfig**: the compiler guarantees the business logic never touches the browser.
+- **Money in integer cents** with a single `quoteStay` function: totals never pick up floating point errors and every screen shows the same numbers.
+- **Promo codes are looked up, never parsed**: the URL value is only a key into the code list, so `?promo=100` cannot become a 100 % discount.
+- **`validateBooking` in the core** returns every blocking issue; `createBooking` reuses it, so the UI and the booking itself can never disagree.
+- **Storage behind a `StorageLike` interface** in the core: the core stays DOM-free and the "storage blocked" path is unit-tested.
+- **Lit without decorators** (`static properties` + `declare` fields): no extra compiler settings, works with the standard `useDefineForClassFields` behaviour.
+- **Typed `var()` references (`vars`) from the tokens package**: components interpolate `t.color.primary` in their CSS, so a misspelt token fails to compile instead of silently falling back.
+- **One custom event name per payload type** (`tb-input`, `tb-date-change`, `tb-count-change`, `tb-select`): each can be declared once in `HTMLElementEventMap` with an exact `detail` type.
+- **Events bubble and are `composed`**: they cross shadow roots, like native UI events, so any framework can listen on the host element.
+- **No `<form>` around the `tb-*` fields**: inputs inside shadow roots are not form-associated; the app reads values from events instead. Form-associated custom elements (`ElementInternals`) are a possible future upgrade.
+- **Native `<input type="date">`** inside `tb-date-field`: accessible picker, keyboard support and localisation without a date library.
+- **React app has no router**: the confirmation is a view state; a router adds nothing for two screens.
+- **React JSX types in `custom-elements.ts` (not `.d.ts`)**: with `skipLibCheck`, mistakes in a `.d.ts` file are silently ignored.
+- **Room illustrations are original SVGs** in the app's `public/rooms` folder: light, crisp at any size and free of licensing questions.
+- **Netlify `ignore` with `git diff`** rather than the `nx-ignore` package: no extra install on every deploy and the rule is readable in one line; the trade-off is listing the watched paths by hand (`apps/<app>`, `libs`, root workspace files). Switch to `nx-ignore` if the dependency graph grows beyond what one line can describe.

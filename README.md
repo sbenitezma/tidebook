@@ -1,5 +1,140 @@
 # Tidebook
 
-A booking site for coastal stays, built as an Nx monorepo with a framework-agnostic design system.
+Tidebook is a booking site for coastal stays: pick your dates and guests, choose a room or
+bungalow, apply a promo code and confirm. It is a portfolio project that shows one design system
+and one business-logic library shared by apps written in different frameworks, inside an Nx
+monorepo.
 
-Work in progress.
+**Live demo (React):** https://sbenitezma-tidebook-react.netlify.app
+
+Try a promo code straight from the URL:
+[`?promo=WELCOME10`](https://sbenitezma-tidebook-react.netlify.app/?promo=WELCOME10) (10 % off),
+`SUMMER15` (15 % off) or `SPRING20` (expired, shows a clear message).
+
+## Architecture
+
+```mermaid
+flowchart LR
+  react[apps/react<br/>React 19 + Vite]
+  vue[apps/vue<br/>Vue 3 · roadmap]
+  ui[libs/ui<br/>Lit web components tb-*]
+  tokens[libs/tokens<br/>design tokens]
+  core[libs/core<br/>business rules · TypeScript]
+
+  react --> ui
+  vue -.-> ui
+  ui --> tokens
+  react --> tokens
+  react --> core
+  vue -.-> core
+```
+
+| Package       | What it holds                                                                                                                                                               |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `libs/tokens` | Colours, typography, spacing, radii and shadows, defined once and exported as TS constants and CSS custom properties (`--tb-*`).                                            |
+| `libs/core`   | Pure TypeScript: dates, guests and capacity, promo codes, pricing, booking creation and storage. No framework, no DOM.                                                      |
+| `libs/ui`     | Ten Lit web components (`tb-button`, `tb-text-field`, `tb-date-field`, `tb-counter`, `tb-badge`, `tb-alert`, `tb-room-card`, `tb-price-summary`, `tb-header`, `tb-footer`). |
+| `apps/react`  | The booking app: presentation and UI state only.                                                                                                                            |
+
+## Why it is built this way
+
+The stack comes from a market study of the most widely used frontend technologies today, which
+this project builds on and deepens.
+
+- **Monorepo with Nx.** One repository, one install, one version of each library. Nx knows the
+  dependency graph, so `nx affected` only lints, tests and builds what a change can break, and
+  results are cached.
+- **Web Components for the design system.** Custom elements are a browser standard, so the same
+  `tb-*` components work in React, Vue, Angular or plain HTML. The design system is written once
+  and outlives any framework choice.
+- **A framework-free core.** Booking rules are plain functions with no framework or DOM
+  dependency (the core's tsconfig does not even include the DOM types). Every app gets the same
+  totals, and the rules are tested in milliseconds.
+- **Test-driven development.** Each core rule started as a failing test. The core has 100 %
+  coverage, enforced by the test runner.
+- **Design tokens.** One typed source of truth for the visual language. Components reference
+  tokens through typed helpers, so a misspelt token is a compile error, not a silent fallback.
+
+Every technical decision is recorded with its reason in [`docs/decisions.md`](docs/decisions.md).
+
+## Getting started
+
+Requires Node 22 or later.
+
+```bash
+npm install
+npm run dev              # React app on http://localhost:5173
+```
+
+Main Nx commands:
+
+```bash
+npx nx test core                            # core business rules with coverage
+npx nx run-many -t lint typecheck test build  # everything (also: npm run check)
+npx nx affected -t lint typecheck test build  # only what changed since main
+npx nx graph                                # explore the project graph
+```
+
+## Business rules
+
+All rules live in `libs/core` and are covered by unit tests.
+
+- **Price.** Total = price per night × number of nights − discount. Amounts are integer cents;
+  the discount is rounded to the nearest cent. `quoteStay` is the only function that computes a
+  price, and the booking stores the exact quote the guest saw.
+- **Promo codes.** A code from the URL (`?promo=CODE`) or the promo field is trimmed, upper-cased
+  and looked up in the code list. Unknown or expired codes show a message and apply no
+  discount. The value is never read as a number, so `?promo=100` is just an unknown code. Codes
+  are valid up to and including their expiry date.
+- **Capacity.** Adults (1–4) and children (0–3) both count towards a room's maximum guests. A
+  booking over capacity is shown as a warning and cannot be confirmed.
+- **Dates.** Check-in defaults to today and check-out to tomorrow. Check-in cannot be in the past
+  and the stay must be at least one night. Night counts use UTC calendar days, so daylight
+  saving changes never add or remove a night.
+- **Saving.** Confirmed bookings are stored in `localStorage`. If the browser blocks storage,
+  the booking still completes and the guest is told it was not saved on the device.
+
+## Using the web components from React
+
+React 19 supports custom elements natively, with no wrapper library:
+
+- **Properties.** When the element defines a property, React sets it as a property, so objects
+  and booleans pass through intact: `<tb-room-card room={room} selected={isSelected} />`.
+- **Events.** A prop named `on` + the exact event name becomes an `addEventListener` call:
+  `<tb-counter ontb-count-change={(event) => setAdults(event.detail.value)} />`.
+- **Types.** [`apps/react/src/custom-elements.ts`](apps/react/src/custom-elements.ts) adds every
+  `tb-*` element to JSX, reusing the component classes and their typed `CustomEvent`s, so props
+  and `event.detail` are checked by TypeScript.
+- **Registration.** `import '@tidebook/ui'` runs before the first render, so elements are
+  defined when React sets their properties.
+
+## Deployment
+
+Each app is its own Netlify site, built from the same repository with its own `netlify.toml`
+(Nx build command, publish folder, Node 22 and an SPA redirect).
+
+To avoid rebuilding sites that did not change, each `netlify.toml` has an `ignore` command:
+
+```toml
+ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- apps/react libs package.json package-lock.json nx.json tsconfig.base.json"
+```
+
+Netlify skips the build when the command exits with 0, which `git diff --quiet` does when none of
+those paths changed since the last deploy. A change to `apps/vue` will not redeploy the React
+site; a change to any shared library redeploys both.
+
+## Roadmap
+
+Tidebook keeps growing in these directions:
+
+- **End-to-end tests** with Playwright for the main booking flow.
+- **Vue 3 app** using the same core, components and tokens, with a side-by-side comparison of how
+  React and Vue consume web components.
+- **Storybook** documenting every component and the token palette, published as its own site.
+- **Angular app** with `CUSTOM_ELEMENTS_SCHEMA`, completing the trio.
+
+## Credits
+
+All room illustrations and the logo are original SVG artwork created for Tidebook.
+
+Made by [Sonia Benítez](https://github.com/sbenitezma).
