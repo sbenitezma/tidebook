@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "dev": "nx dev react",
+    "dev:vue": "nx dev vue",
     "build": "nx run-many -t build",
     "test": "nx run-many -t test",
     "lint": "nx run-many -t lint",
@@ -28,6 +29,7 @@
     "eslint": "^10.13.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-vue": "^10.12.0",
     "globals": "^17.13.0",
     "happy-dom": "^21.0.4",
     "nx": "^24.0.2",
