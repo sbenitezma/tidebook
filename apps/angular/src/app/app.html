@@ -1,0 +1,126 @@
+<a class="skip-link" href="#main">Skip to content</a>
+<tb-header></tb-header>
+<main id="main" class="page">
+  @if (confirmed(); as done) {
+  <app-booking-confirmation [booking]="done.booking" [saved]="done.saved" (done)="startOver()" />
+  } @else {
+  <section class="hero" aria-labelledby="hero-title">
+    <h1 id="hero-title">Stays where the tide sets the pace</h1>
+    <p>Rooms and bungalows a few steps from the sea. Pick your dates and find your spot.</p>
+  </section>
+
+  <section class="card search" aria-labelledby="search-title">
+    <h2 id="search-title" class="visually-hidden">Your dates and guests</h2>
+    <tb-date-field
+      label="Check-in"
+      [value]="checkIn()"
+      [min]="today"
+      [error]="fieldError('invalid-check-in', 'check-in-in-past')"
+      (tb-date-change)="changeCheckIn($event.detail.value)"
+    ></tb-date-field>
+    <tb-date-field
+      label="Check-out"
+      [value]="checkOut()"
+      [min]="addDays(checkIn() || today, 1)"
+      [error]="fieldError('invalid-check-out', 'check-out-not-after-check-in')"
+      (tb-date-change)="checkOut.set($event.detail.value)"
+    ></tb-date-field>
+    <tb-counter
+      label="Adults"
+      [value]="adults()"
+      [min]="limits.adults.min"
+      [max]="limits.adults.max"
+      (tb-count-change)="adults.set($event.detail.value)"
+    ></tb-counter>
+    <tb-counter
+      label="Children"
+      [value]="children()"
+      [min]="limits.children.min"
+      [max]="limits.children.max"
+      (tb-count-change)="children.set($event.detail.value)"
+    ></tb-counter>
+  </section>
+
+  <div class="layout">
+    <section aria-labelledby="rooms-title">
+      <h2 id="rooms-title">Rooms and bungalows</h2>
+      <ul class="rooms" role="list">
+        @for (candidate of rooms; track candidate.id) {
+        <li>
+          <tb-room-card
+            [room]="candidate"
+            [price]="formatMoney(candidate.pricePerNightCents)"
+            [selected]="candidate.id === roomId()"
+            (tb-select)="roomId.set($event.detail.id)"
+          ></tb-room-card>
+        </li>
+        }
+      </ul>
+    </section>
+
+    <aside id="summary" class="summary" aria-labelledby="summary-title">
+      <h2 id="summary-title" class="visually-hidden">Booking summary</h2>
+      @if (room(); as room) { @if (quote(); as quote) {
+      <tb-price-summary
+        [heading]="room.name"
+        [nights]="quote.nights"
+        [pricePerNight]="formatMoney(quote.pricePerNightCents)"
+        [subtotal]="formatMoney(quote.subtotalCents)"
+        [discount]="quote.discountCents ? formatMoney(quote.discountCents) : ''"
+        [discountLabel]="discountLabel()"
+        [total]="formatMoney(quote.totalCents)"
+      >
+        <div class="stack">
+          @if (issues().includes('over-capacity')) {
+          <tb-alert variant="warning" heading="Too many guests for this room">
+            {{ room.name }} sleeps up to {{ room.maxGuests }}; your group is {{ adults() +
+            children() }}. Choose a larger room or fewer guests.
+          </tb-alert>
+          }
+          <div class="promo">
+            <tb-text-field
+              label="Promo code"
+              [value]="promoInput()"
+              placeholder="e.g. WELCOME10"
+              (tb-input)="promoInput.set($event.detail.value)"
+              (keydown.enter)="applyPromo()"
+            ></tb-text-field>
+            <tb-button variant="secondary" (click)="applyPromo()">Apply</tb-button>
+          </div>
+          @if (promoFeedback(); as feedback) {
+          <tb-alert [variant]="feedback.variant">{{ feedback.text }}</tb-alert>
+          }
+          <tb-button block [disabled]="issues().length > 0" (click)="confirm()">
+            Confirm booking
+          </tb-button>
+        </div>
+      </tb-price-summary>
+      } } @if (!quote()) {
+      <div class="card empty">
+        @if (blocking().length) {
+        <tb-alert variant="danger" heading="Check your search">
+          @for (issue of blocking(); track issue) {
+          <p>{{ issueMessages[issue] }}</p>
+          }
+        </tb-alert>
+        } @else {
+        <p>{{ issueMessages['no-room-selected'] }}</p>
+        } @if (promoFeedback(); as feedback) {
+        <tb-alert [variant]="feedback.variant">{{ feedback.text }}</tb-alert>
+        }
+      </div>
+      }
+    </aside>
+  </div>
+
+  @if (room(); as room) { @if (quote(); as quote) {
+  <a class="mobile-bar" href="#summary">
+    <span> {{ room.name }} · <strong>{{ formatMoney(quote.totalCents) }}</strong> </span>
+    <span aria-hidden="true">Review ↓</span>
+  </a>
+  } } }
+</main>
+<tb-footer>
+  Tidebook is a portfolio project: no real bookings are made. Made by
+  <a href="https://github.com/sbenitezma">Sonia Benítez</a>.
+</tb-footer>

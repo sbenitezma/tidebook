@@ -4,3 +4,4 @@ coverage
 .nx
 package-lock.json
 tidebook-prompt.md
+.angular

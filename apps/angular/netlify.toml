@@ -1,0 +1,16 @@
+# Netlify site for the Angular app. Site settings: base directory = repository root,
+# package directory = apps/angular. Paths below are relative to the base directory.
+[build]
+  command = "npx nx build angular"
+  publish = "apps/angular/dist/browser"
+  # Exit code 0 skips the build: only rebuild when this app, a shared library or the
+  # workspace setup changed since the last deploy.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- apps/angular libs package.json package-lock.json nx.json tsconfig.base.json"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

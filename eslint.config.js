@@ -14,6 +14,8 @@ export default tseslint.config(
       '**/.nx',
       '**/test-results',
       '**/playwright-report',
+      '**/.angular',
+      'apps/angular/public',
     ],
   },
   js.configs.recommended,
