@@ -6,6 +6,7 @@ import {
   makeReference,
   saveBooking,
   type StorageLike,
+  validateBooking,
 } from './booking';
 import type { Room } from './types';
 
@@ -88,6 +89,23 @@ describe('createBooking', () => {
     expect(() =>
       createBooking({ ...request, guests: { adults: 3, children: 1 } }, context),
     ).toThrow('over-capacity');
+  });
+
+  it('reports every issue at once through validateBooking', () => {
+    expect(validateBooking(request, context.today)).toEqual([]);
+    expect(
+      validateBooking(
+        {
+          room: undefined,
+          stay: { checkIn: '2026-06-30', checkOut: '2026-07-02' },
+          guests: { adults: 5, children: 0 },
+        },
+        context.today,
+      ),
+    ).toEqual(['check-in-in-past', 'adults-out-of-range', 'no-room-selected']);
+    expect(
+      validateBooking({ ...request, guests: { adults: 4, children: 0 } }, context.today),
+    ).toEqual(['over-capacity']);
   });
 
   it('works with the default clock and random source', () => {

@@ -1,5 +1,5 @@
-import { nightsBetween, validateStay } from './dates';
-import { checkCapacity, validateGuests } from './guests';
+import { nightsBetween, validateStay, type StayError } from './dates';
+import { checkCapacity, validateGuests, type GuestsError } from './guests';
 import { quoteStay } from './pricing';
 import type { Booking, Guests, IsoDate, PromoResult, Room, Stay } from './types';
 
@@ -27,14 +27,26 @@ export interface BookingContext {
   random?: () => number;
 }
 
+export type BookingIssue = StayError | GuestsError | 'no-room-selected' | 'over-capacity';
+
+/** Everything that stops a booking from being confirmed; empty when it can go ahead. */
+export function validateBooking(
+  { room, stay, guests }: { room: Pick<Room, 'maxGuests'> | undefined; stay: Stay; guests: Guests },
+  today: IsoDate,
+): BookingIssue[] {
+  const issues: BookingIssue[] = [...validateStay(stay, today), ...validateGuests(guests)];
+  if (!room) issues.push('no-room-selected');
+  else if (!checkCapacity(room, guests).fits) issues.push('over-capacity');
+  return issues;
+}
+
 /** Validates the request and freezes the quote, so the stored total is the one the guest saw. */
 export function createBooking(
   { room, stay, guests, promo }: BookingRequest,
   { today, now = new Date(), random }: BookingContext,
 ): Booking {
-  const errors: string[] = [...validateStay(stay, today), ...validateGuests(guests)];
-  if (!checkCapacity(room, guests).fits) errors.push('over-capacity');
-  if (errors.length) throw new Error(`Invalid booking: ${errors.join(', ')}`);
+  const issues = validateBooking({ room, stay, guests }, today);
+  if (issues.length) throw new Error(`Invalid booking: ${issues.join(', ')}`);
 
   const valid = promo.status === 'valid' ? promo : null;
   return {
