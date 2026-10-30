@@ -13,6 +13,7 @@ export interface RoomCardData {
   beds: number;
   bedType: string;
   maxGuests: number;
+  /** Photo path; a `@2x` file next to it is used on high-density screens. */
   image: string;
 }
 
@@ -140,7 +141,14 @@ export class TbRoomCard extends LitElement {
     if (!room) return nothing;
     return html`
       <article aria-labelledby="name">
-        <img src=${room.image} alt="" loading="lazy" width="640" height="400" />
+        <img
+          src=${room.image}
+          srcset=${`${room.image.replace(/(\.\w+)$/, '@2x$1')} 2x`}
+          alt=""
+          loading="lazy"
+          width="640"
+          height="400"
+        />
         <div class="body">
           <tb-badge variant=${room.type === 'bungalow' ? 'accent' : 'neutral'}>
             ${room.type === 'bungalow' ? 'Bungalow' : 'Room'}

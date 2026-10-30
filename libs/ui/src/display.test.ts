@@ -14,7 +14,7 @@ const room: RoomCardData = {
   beds: 2,
   bedType: 'Queen',
   maxGuests: 4,
-  image: 'rooms/seagrass.svg',
+  image: 'rooms/seagrass.webp',
 };
 
 describe('tb-button', () => {
@@ -66,7 +66,8 @@ describe('tb-room-card', () => {
     expect(root.textContent).toContain('40 m²');
     expect(root.textContent).toContain('Up to 4');
     expect(root.querySelector('.price')?.textContent).toContain('€165.00');
-    expect(root.querySelector('img')?.getAttribute('src')).toBe('rooms/seagrass.svg');
+    expect(root.querySelector('img')?.getAttribute('src')).toBe('rooms/seagrass.webp');
+    expect(root.querySelector('img')?.getAttribute('srcset')).toBe('rooms/seagrass@2x.webp 2x');
 
     const listener = vi.fn();
     card.addEventListener('tb-select', (event) => listener(event.detail.id));

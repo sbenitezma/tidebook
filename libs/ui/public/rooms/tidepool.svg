@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
-<rect width="640" height="400" fill="#fde7c8"/>
-<circle cx="140" cy="110" r="46" fill="#f08a5d"/>
-<path d="M0 230 Q160 210 320 230 T640 230 V400 H0Z" fill="#2f7c86"/>
-<path d="M0 262 Q80 252 160 262 T320 262 T480 262 T640 262" stroke="#ffffff" stroke-opacity=".35" stroke-width="4" fill="none"/>
-<path d="M0 300 Q200 270 400 290 T640 285 V400 H0Z" fill="#e9cf9e"/>
-<rect x="360" y="190" width="200" height="90" fill="#fbf7f0"/><polygon points="340,195 460,130 580,195" fill="#0b6e77"/><rect x="340" y="280" width="240" height="12" fill="#8a6a4a"/><rect x="390" y="215" width="50" height="40" fill="#2f7c86" opacity=".7"/><rect x="470" y="215" width="40" height="65" fill="#8a6a4a"/><path d="M150 300 C150 230 170 200 200 180" stroke="#6b4f35" stroke-width="10" fill="none"/><path d="M200 180 q-50 -10 -80 20 M200 180 q-40 -40 -90 -20 M200 180 q40 -40 80 -10 M200 180 q40 0 60 40" stroke="#2f6b4f" stroke-width="12" fill="none" stroke-linecap="round"/>
-</svg>

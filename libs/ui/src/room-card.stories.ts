@@ -17,7 +17,7 @@ const room: RoomCardData = {
   beds: 2,
   bedType: 'Double',
   maxGuests: 4,
-  image: 'rooms/seagrass.svg',
+  image: 'rooms/seagrass.webp',
 };
 
 const meta: Meta<Args> = {
@@ -52,7 +52,7 @@ export const Room: Story = {
       sizeM2: 18,
       beds: 1,
       maxGuests: 2,
-      image: 'rooms/driftwood.svg',
+      image: 'rooms/driftwood.webp',
     },
   },
 };

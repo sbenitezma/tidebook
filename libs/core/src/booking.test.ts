@@ -20,7 +20,7 @@ const room: Room = {
   bedType: 'Queen',
   maxGuests: 3,
   pricePerNightCents: 16500,
-  image: 'rooms/seagrass.svg',
+  image: 'rooms/seagrass.webp',
 };
 
 const context = { today: '2026-07-01', now: new Date('2026-07-01T10:00:00Z'), random: () => 0 };

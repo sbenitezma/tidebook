@@ -9,7 +9,7 @@
     "bedType": "Double",
     "maxGuests": 2,
     "pricePerNightCents": 9500,
-    "image": "rooms/driftwood.svg"
+    "image": "rooms/driftwood.webp"
   },
   {
     "id": "salt-marsh",
@@ -21,7 +21,7 @@
     "bedType": "Twin",
     "maxGuests": 3,
     "pricePerNightCents": 12000,
-    "image": "rooms/salt-marsh.svg"
+    "image": "rooms/salt-marsh.webp"
   },
   {
     "id": "seagrass",
@@ -33,7 +33,7 @@
     "bedType": "Queen and sofa bed",
     "maxGuests": 4,
     "pricePerNightCents": 16500,
-    "image": "rooms/seagrass.svg"
+    "image": "rooms/seagrass.webp"
   },
   {
     "id": "lighthouse",
@@ -45,7 +45,7 @@
     "bedType": "King and twin",
     "maxGuests": 5,
     "pricePerNightCents": 21000,
-    "image": "rooms/lighthouse.svg"
+    "image": "rooms/lighthouse.webp"
   },
   {
     "id": "tidepool",
@@ -57,6 +57,6 @@
     "bedType": "King and two singles",
     "maxGuests": 7,
     "pricePerNightCents": 26500,
-    "image": "rooms/tidepool.svg"
+    "image": "rooms/tidepool.webp"
   }
 ]
