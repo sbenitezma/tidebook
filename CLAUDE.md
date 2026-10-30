@@ -6,7 +6,7 @@ frameworks.
 
 ## Functional scope (v1)
 
-1. Accommodation list (illustration, name, type room/bungalow, size, beds, max capacity, price per
+1. Accommodation list (photo, name, type room/bungalow, size, beds, max capacity, price per
    night) from mock JSON in `libs/core/src/data`.
 2. Search form: check-in (default today), check-out (default tomorrow), adults 1–4, children 0–3.
 3. Room selection and booking summary: nights, price per night, subtotal, discount, total, and a
@@ -44,7 +44,7 @@ Business rules that must stay covered by tests:
 - `apps/vue`: Vue 3 + Vite, `<script setup>` SFCs. `isCustomElement` for `tb-*` in
   `vite.config.ts`; bindings become properties, events as `@tb-select`, typed through
   `GlobalComponents` in `src/custom-elements.ts` and checked by `vue-tsc`.
-- Shared by every app: page layout CSS (`@tidebook/ui/layout.css`), room illustrations and favicon
+- Shared by every app: page layout CSS (`@tidebook/ui/layout.css`), room photos (`name.webp` + `name@2x.webp`) and favicon
   (`libs/ui/public`, Vite `publicDir`), user-facing messages and `formatLongDate` (`libs/core`).
 - `apps/e2e`: one Playwright suite run against every app's production build (desktop and
   mobile). Locators by role and label (they pierce shadow DOM). Run with `npx nx e2e e2e`;

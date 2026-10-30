@@ -37,15 +37,15 @@ flowchart LR
   angular --> core
 ```
 
-| Package        | What it holds                                                                                                                                                                                                                               |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `libs/tokens`  | Colours, typography, spacing, radii and shadows, defined once and exported as TS constants and CSS custom properties (`--tb-*`).                                                                                                            |
-| `libs/core`    | Pure TypeScript: dates, guests and capacity, promo codes, pricing, booking creation and storage. No framework, no DOM.                                                                                                                      |
-| `libs/ui`      | The page layout stylesheet, room illustrations, a Storybook and ten Lit web components (`tb-button`, `tb-text-field`, `tb-date-field`, `tb-counter`, `tb-badge`, `tb-alert`, `tb-room-card`, `tb-price-summary`, `tb-header`, `tb-footer`). |
-| `apps/react`   | The booking app in React 19: presentation and UI state only.                                                                                                                                                                                |
-| `apps/vue`     | The same booking app in Vue 3: presentation and UI state only.                                                                                                                                                                              |
-| `apps/angular` | The same booking app in Angular 22 with signals: presentation and UI state only.                                                                                                                                                            |
-| `apps/e2e`     | Playwright end-to-end tests of the booking flow, run against all three apps on desktop and mobile, using the production builds.                                                                                                             |
+| Package        | What it holds                                                                                                                                                                                                                        |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `libs/tokens`  | Colours, typography, spacing, radii and shadows, defined once and exported as TS constants and CSS custom properties (`--tb-*`).                                                                                                     |
+| `libs/core`    | Pure TypeScript: dates, guests and capacity, promo codes, pricing, booking creation and storage. No framework, no DOM.                                                                                                               |
+| `libs/ui`      | The page layout stylesheet, room photos, a Storybook and ten Lit web components (`tb-button`, `tb-text-field`, `tb-date-field`, `tb-counter`, `tb-badge`, `tb-alert`, `tb-room-card`, `tb-price-summary`, `tb-header`, `tb-footer`). |
+| `apps/react`   | The booking app in React 19: presentation and UI state only.                                                                                                                                                                         |
+| `apps/vue`     | The same booking app in Vue 3: presentation and UI state only.                                                                                                                                                                       |
+| `apps/angular` | The same booking app in Angular 22 with signals: presentation and UI state only.                                                                                                                                                     |
+| `apps/e2e`     | Playwright end-to-end tests of the booking flow, run against all three apps on desktop and mobile, using the production builds.                                                                                                      |
 
 ## Why it is built this way
 
@@ -158,6 +158,6 @@ Tidebook keeps growing in these directions:
 
 ## Credits
 
-All room illustrations and the logo are original SVG artwork created for Tidebook.
+The room photos were created for Tidebook and show fictional places; the logo is original SVG artwork.
 
 Made by [Sonia Benítez](https://github.com/sbenitezma).
