@@ -13,7 +13,7 @@ export interface Room {
   bedType: string;
   maxGuests: number;
   pricePerNightCents: number;
-  /** Path to the illustration, relative to the app's public folder. */
+  /** Path to the photo, relative to the app's public folder; a `@2x` file sits next to it. */
   image: string;
 }
 
