@@ -158,6 +158,6 @@ Tidebook keeps growing in these directions:
 
 ## Credits
 
-The room photos were created for Tidebook and show fictional places; the logo is original SVG artwork.
+The room photos are AI-generated images created for Tidebook and show fictional places; the logo is original SVG artwork.
 
 Made by [Sonia Benítez](https://github.com/sbenitezma).
